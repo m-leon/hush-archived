@@ -39,7 +39,9 @@ services:
       - db
       - npm
     volumes:
-      - ./src/:/app/:rw
+      - ./src/:/app/:ro
+      - ./src/bootstrap/cache/:/app/bootstrap/cache/:rw
+      - ./src/storage/:/app/storage/:rw
       - ./build/php.${APP_ENV}.ini:/usr/local/etc/php/php.ini:ro
   www:
     container_name: ${APP_NAME}-www

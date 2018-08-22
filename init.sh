@@ -32,8 +32,7 @@ else
 fi
 
 if [ -z ${APP_NAME} ]; then
-  echo -e "\e[41mERROR\e[0m APP_NAME needs to be defined"
-  exit 1
+  export APP_NAME=hush
 else
   export APP_NAME=${APP_NAME}
 fi
