@@ -53,4 +53,4 @@ services:
       - ./src/:/app/:ro
       - ./build/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
-      - '8080:80'
+      - '${APP_PORT}:80'

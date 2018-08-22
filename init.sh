@@ -4,7 +4,10 @@ if ! [ -x "$(command -v docker)" ]; then
   exit 1
 fi
 
-# TODO: Check file permissions for repo
+if [ ! -w "./src/storage/" ] && [ ! -w "./src/bootstrap/cache/" ]; then
+  echo -e "\e[41mERROR\e[0m This user needs write permissions to cache directories ('./src/storage/' and './src/bootstrap/cache/')"
+  exit 2
+fi
 
 ###### Environment variables ######
 # Read existing environment variables if they exist
@@ -35,6 +38,12 @@ if [ -z ${APP_NAME} ]; then
   export APP_NAME=hush
 else
   export APP_NAME=${APP_NAME}
+fi
+
+if [ -z ${APP_PORT} ]; then
+  export APP_PORT=8080
+else
+  export APP_PORT=${APP_PORT}
 fi
 
 # Run permissions used for NPM, Composer, & PHP containers
@@ -86,7 +95,7 @@ fi
 # Port 8080 hardcoded here and in Nginx's docker definition
 if [ -z ${APP_URL} ]; then
   if [ "$APP_ENV" == "local" ]; then
-    export APP_URL=http://localhost:8080
+    export APP_URL=http://localhost:${APP_PORT}
   else
     echo -e "\e[41mERROR\e[0m APP_URL needs to be defined"
     exit 1
