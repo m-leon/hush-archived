@@ -1,6 +1,26 @@
 version: '3'
 
 services:
+  npm:
+    container_name: ${APP_NAME}-npm
+    image: node:10.9.0-slim
+    user: ${APP_UID}:${APP_GID}
+    env_file:
+      - .env
+    working_dir: /app/
+    command: bash -c "
+      yarn install &&
+      ${NPM_COMMAND}"
+    volumes:
+      - ./src/:/app/
+  composer:
+    container_name: ${APP_NAME}-composer
+    image: composer:1.7.2
+    user: ${APP_UID}:${APP_GID}
+    working_dir: /app/
+    command: composer install
+    volumes:
+      - ./src/:/app/
   db:
     container_name: ${APP_NAME}-db
     image: mariadb:10.3.8
@@ -15,11 +35,11 @@ services:
     env_file:
       - .env
     depends_on:
+      - composer
       - db
+      - npm
     volumes:
-      - ./src/:/app/:ro
-      - ./cache/bootstrap/:/app/bootstrap/cache/:rw
-      - ./cache/storage/:/app/storage/:rw
+      - ./src/:/app/:rw
       - ./build/php.${APP_ENV}.ini:/usr/local/etc/php/php.ini:ro
   www:
     container_name: ${APP_NAME}-www
@@ -29,8 +49,6 @@ services:
       - php
     volumes:
       - ./src/:/app/:ro
-      - ./cache/bootstrap/:/app/bootstrap/cache/:ro
-      - ./cache/storage/:/app/storage/:ro
       - ./build/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - '8080:80'
