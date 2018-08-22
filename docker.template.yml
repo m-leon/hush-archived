@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  db:
+    container_name: ${APP_NAME}-db
+    image: mariadb:10.3.8
+    env_file:
+      - .env
+  php:
+    container_name: ${APP_NAME}-php
+    build:
+      context: ./build
+      dockerfile: php.docker
+    user: ${APP_UID}:${APP_GID}
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - ./src/:/app/:ro
+      - ./cache/bootstrap/:/app/bootstrap/cache/:rw
+      - ./cache/storage/:/app/storage/:rw
+      - ./build/php.${APP_ENV}.ini:/usr/local/etc/php/php.ini:ro
+  www:
+    container_name: ${APP_NAME}-www
+    image: nginx:1.15.2-alpine
+    depends_on:
+      - db
+      - php
+    volumes:
+      - ./src/:/app/:ro
+      - ./cache/bootstrap/:/app/bootstrap/cache/:ro
+      - ./cache/storage/:/app/storage/:ro
+      - ./build/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - '8080:80'
