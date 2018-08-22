@@ -23,9 +23,11 @@ services:
       - ./src/:/app/
   db:
     container_name: ${APP_NAME}-db
-    image: mariadb:10.3.8
+    image: mariadb:10.3.9
     env_file:
       - .env
+    volumes:
+      - ./db_store/:/var/lib/mysql/
   php:
     container_name: ${APP_NAME}-php
     build:
