@@ -34,11 +34,7 @@ else
   export NPM_COMMAND='yarn run watch'
 fi
 
-if [ -z ${APP_NAME} ]; then
-  export APP_NAME=hush
-else
-  export APP_NAME=${APP_NAME}
-fi
+export APP_NAME=hush
 
 if [ -z ${APP_PORT} ]; then
   export APP_PORT=8080
