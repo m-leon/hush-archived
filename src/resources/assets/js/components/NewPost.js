@@ -33,25 +33,24 @@ export default class NewPost extends React.Component {
     const clear = e.target.elements.clear.value;
     try {
       const cipher = SimpleEncryptor(key).encrypt(clear);
+
+      // Update state values to be submitted
+      this.setState({
+        formDisabled: true,
+        cipher,
+        key,
+        clear
+      });
+
+      // Update form with generated key
+      e.target.elements.key.value = key;
+
+      // Send cipher to server, no other data needs to be sent
+      this.sendCipher(cipher);
     } catch (e) {
       // Failed to encrypt text. Maybe bad key
       this.setState({ 'error': 'Failed to encrypt. Ensure key is 16 characters.' });
-      return;
     }
-
-    // Update state values to be submitted
-    this.setState({
-      formDisabled: true,
-      cipher,
-      key,
-      clear
-    });
-
-    // Update form with generated key
-    e.target.elements.key.value = key;
-
-    // Send cipher to server, no other data needs to be sent
-    this.sendCipher(cipher);
   }
 
   sendCipher(cipher) {
@@ -77,7 +76,11 @@ export default class NewPost extends React.Component {
   generatePostURL(id) {
     // TODO: Find better way to output
     // For now use error to display post's URL
-    this.setState({ error: `${window.location.hostname}/view/${this.state.id}/#${this.state.key}` })
+    let hostname = window.location.hostname;
+    if (window.location.port !== '80') {
+      hostname += ':' + window.location.port;
+    }
+    this.setState({ error: `${hostname}/view/${this.state.id}/#${this.state.key}` })
   }
 
   render() {

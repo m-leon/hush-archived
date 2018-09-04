@@ -12,6 +12,7 @@ Route::get('/post/{id}', function ($id) {
 
 Route::put('/post', function() {
   return response()->json([
-    'status' => '0'
+    'status' => '1',
+    'id' => '1234'
   ]);
 });
