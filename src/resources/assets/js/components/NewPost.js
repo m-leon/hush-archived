@@ -13,6 +13,10 @@ export default class NewPost extends React.Component {
       clear: '',
       error: ''
     };
+
+    this.submitForm = this.submitForm.bind(this);
+    this.sendCipher = this.sendCipher.bind(this);
+    this.generatePostURL = this.generatePostURL.bind(this);
   }
 
   submitForm(e) {
@@ -20,8 +24,15 @@ export default class NewPost extends React.Component {
     const key = (e.target.elements.key.value) ? e.target.elements.key.value : uuid();
     const clear = e.target.elements.clear.value;
     const cipher = SimpleEncryptor(key).encrypt(clear);
-    // TODO: Submit cipher to server. Will return id. Display URL: {CurrentURL}/view/{id}/#{key}
-    this.sendCipher().then(this.generatePostURL);
+
+    // Update state values once submitted
+    this.setState({
+      cipher,
+      key,
+      clear
+    });
+
+    this.sendCipher(cipher).then(this.generatePostURL);
   }
 
   async sendCipher(cipher) {
@@ -30,7 +41,8 @@ export default class NewPost extends React.Component {
   }
 
   generatePostURL(id) {
-    console.log(`http://localhost:8080/view/${this.state.id}/#${this.state.key}`);
+    console.log(this.state);
+    console.log(`${window.location.hostname}/view/${this.state.id}/#${this.state.key}`);
   }
 
   render() {
