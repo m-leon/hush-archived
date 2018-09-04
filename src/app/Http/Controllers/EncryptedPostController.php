@@ -3,13 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\EncryptedPost;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class EncryptedPostController extends Controller {
+  /**
+   * Returns cipher for given ID
+   *
+   * @param  Request  $request
+   * @return Response
+   */
   public function getByID(Request $request) {
     try {
-      $post = EncryptedPost::where('id', $request->id)->firstOrFail();
+      $post = EncryptedPost::findOrFail($request->id);
       return response()->json([
         'status' => '0',
         'ciphertext' => $post->ciphertext
@@ -28,11 +35,17 @@ class EncryptedPostController extends Controller {
    * @return Response
    */
   public function store(Request $request) {
-    $id = 'UN-ID-1234';// TODO: Generate ID as a UUID?
+    do {
+      // Generate an random UUID to use as ID
+      $id = (string) Str::uuid();
+    } while (EncryptedPost::find($id)); // Check that there doesn't exist a post with the same ID
+
+    // Create Model of post with given data
     $post = new EncryptedPost;
     $post->id = $id;
     $post->ciphertext = $request->cipher;
     $post->save();
+
     return response()->json([
       'status' => '0',
       'id' => $id
