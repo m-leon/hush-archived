@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import SimpleEncryptor from 'simple-encryptor';
 
@@ -9,23 +10,30 @@ export default class ViewPost extends React.Component {
       id: props.match.params.id, // TODO: Add check if not passed
       key: (window.location.hash).substring(1),
       cipher: '',
-      clear: '',
+      clear: 'Loading...',
       error: ''
     };
 
-    this.retrieveCipher().then((cipher) => { this.setState({ cipher }) });
+    this.retrieveCipher();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.key !== this.state.key || prevState.cipher !== this.state.cipher) {
+    if (prevState.key !== this.state.key
+     || prevState.cipher !== this.state.cipher) {
       this.attemptDecrypt();
     }
   }
 
-  async retrieveCipher() {
-    // TODO: Attempt to contact laravel server and retrieve cipher by this.state.id
-    const res = SimpleEncryptor("abcdefghijklmnopqrstuvwxyz").encrypt("HARDCODED!");
-    return res;
+  retrieveCipher() {
+    axios.get(`/api/post/${this.state.id}`).then(
+      (res) => {
+        this.setState({ cipher: res.data.ciphertext })
+      }
+    ).catch(
+      (e) => {
+        this.setState({ error: 'Failed to retrieve cipher text from server.' })
+      }
+    );
   }
 
   attemptDecrypt() {
@@ -33,14 +41,14 @@ export default class ViewPost extends React.Component {
     try {
       encryptor = SimpleEncryptor(this.state.key);
     } catch (e) {
-      this.setState({ error: "Failed to decrypt. Malformed key." });
+      this.setState({ error: 'Failed to decrypt. Malformed key.' });
       return;
     }
     const clear = encryptor.decrypt(this.state.cipher);
     if (clear) {
-      this.setState({ clear });
+      this.setState({ clear, error: '' });
     } else {
-      this.setState({ error: "Failed to decrypt. Incorrect key." });
+      this.setState({ error: 'Failed to decrypt. Incorrect key.' });
     }
   }
 
@@ -51,7 +59,6 @@ export default class ViewPost extends React.Component {
         <p>ID: {this.state.id}</p>
         <p>Cipher: {this.state.cipher}</p>
         <p>Clear: {this.state.clear}</p>
-        <button onClick={() => { this.setState({ cipher: 'update' }); }}>Change Cipher</button>
       </div>
     );
   }

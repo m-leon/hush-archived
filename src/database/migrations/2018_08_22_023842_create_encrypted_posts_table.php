@@ -14,8 +14,8 @@ class CreateEncryptedPostsTable extends Migration
     public function up()
     {
         Schema::create('encrypted_posts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('key')->unique();
+            $table->increments('uid');
+            $table->string('id')->unique();
             $table->string('ciphertext');
             $table->timestamps();
         });
