@@ -58,9 +58,9 @@ export default class NewPost extends React.Component {
     axios.put(`/api/post/`, data).then(
       (res) => {
         // Successfully posted
-        if (typeof(res.data.status) !== 'undefined' && res.data.status === '1') {
+        if (typeof(res.data.status) !== 'undefined' && res.data.status === '0') {
           this.setState({ id: res.data.id, error: '' });
-        // Server didn't return with a status == 1, unknown error
+        // Server didn't return with a status == 0, unknown error
         } else {
           this.setState({ error: 'Failed to post. Try again later.', formDisabled: false });
         }
