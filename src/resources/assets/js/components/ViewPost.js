@@ -27,7 +27,11 @@ export default class ViewPost extends React.Component {
   retrieveCipher() {
     axios.get(`/api/post/${this.state.id}`).then(
       (res) => {
-        this.setState({ cipher: res.data.ciphertext })
+        if (res.data.id === this.state.id) {
+          this.setState({ cipher: res.data.ciphertext });
+        } else {
+          this.setState({ error: 'Failed to retrieve cipher.' });
+        }
       }
     ).catch(
       (e) => {
