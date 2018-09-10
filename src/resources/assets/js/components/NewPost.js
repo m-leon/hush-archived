@@ -1,7 +1,7 @@
-import axios from 'axios';
-import React from 'react';
-import SimpleEncryptor from 'simple-encryptor';
-import uuid from 'uuid/v4';
+import AES    from 'crypto-js/aes';
+import axios  from 'axios';
+import React  from 'react';
+import uuid   from 'uuid/v4';
 
 export default class NewPost extends React.Component {
   constructor(props) {
@@ -29,10 +29,11 @@ export default class NewPost extends React.Component {
 
   submitForm(e) {
     e.preventDefault();
+    // Use key if provided by user, if no key provided generate with UUIDV4
     const key = (e.target.elements.key.value) ? e.target.elements.key.value : uuid();
     const clear = e.target.elements.clear.value;
     try {
-      const cipher = SimpleEncryptor(key).encrypt(clear);
+      const cipher = AES.encrypt(clear, key).toString();
 
       // Update state values to be submitted
       this.setState({
@@ -68,7 +69,7 @@ export default class NewPost extends React.Component {
     ).catch(
       // Catch network errors
       (e) => {
-        this.setState({ error: 'Failed to post. Check your connection.', formDisabled: false })
+        this.setState({ error: 'Failed to post. Try again later.', formDisabled: false })
       }
     );
   }
@@ -77,7 +78,7 @@ export default class NewPost extends React.Component {
     // TODO: Find better way to output
     // For now use error to display post's URL
     let hostname = window.location.hostname;
-    if (window.location.port !== '80') {
+    if (window.location.port && (window.location.port !== '80' || window.location.port != '443')) {
       hostname += ':' + window.location.port;
     }
     this.setState({ error: `${hostname}/view/${this.state.id}/#${this.state.key}` })
@@ -89,7 +90,7 @@ export default class NewPost extends React.Component {
         { this.state.error && <p>{this.state.error}</p> }
         <form onSubmit={this.submitForm}>
           <textarea placeholder="" name="clear" disabled={this.state.formDisabled}></textarea>
-          <input type="text" placeholder="Optional key (min 16 chars)" name="key" disabled={this.state.formDisabled} />
+          <input type="text" placeholder="Optional key (recommended 16 chars)" name="key" disabled={this.state.formDisabled} />
           <button disabled={this.state.formDisabled}>Post</button>
         </form>
       </div>

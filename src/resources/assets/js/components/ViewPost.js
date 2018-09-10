@@ -1,6 +1,6 @@
-import axios from 'axios';
-import React from 'react';
-import SimpleEncryptor from 'simple-encryptor';
+import axios    from 'axios';
+import CryptoJS from 'crypto-js';
+import React    from 'react';
 
 export default class ViewPost extends React.Component {
   constructor(props) {
@@ -45,7 +45,7 @@ export default class ViewPost extends React.Component {
           this.setState({ cipher: res.data.ciphertext });
         // Server didn't return with a status == 0, ignore data
         } else {
-          this.setState({ error: 'Failed to retrieve cipher. Wrong ID?' });
+          this.setState({ error: 'Failed to retrieve cipher.' });
         }
       }
     ).catch(
@@ -57,21 +57,14 @@ export default class ViewPost extends React.Component {
   }
 
   attemptDecrypt() {
-    try {
-      // Validate key with SimpleEncryptor, throws error if invalid
-      const encryptor = SimpleEncryptor(this.state.key);
-      // Attempt to use key to decrypt, returns empty if invalid
-      const clear = encryptor.decrypt(this.state.cipher);
+    const decryptedBytes = CryptoJS.AES.decrypt(this.state.cipher, this.state.key);
+    const clear = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
-      if (clear) {
-        // Successful decryption
-        this.setState({ clear, error: '' });
-      } else {
-        this.setState({ error: 'Failed to decrypt. Incorrect key.', clear: '' });
-      }
-
-    } catch (e) {
-      this.setState({ error: 'Failed to decrypt. Malformed key.', clear: '' });
+    if (clear) {
+      // Successful decryption
+      this.setState({ clear, error: '' });
+    } else {
+      this.setState({ error: 'Failed to decrypt.', clear: '' });
     }
   }
 
