@@ -10,9 +10,15 @@ export default class ViewPost extends React.Component {
       id: props.match.params.id,
       key: (window.location.hash).substring(1),
       cipher: '',
-      clear: 'Loading...',
-      error: ''
+      clear: '',
+      error: 'Loading...'
     };
+    this.onKeyChange = this.onKeyChange.bind(this);
+  }
+
+  onKeyChange(e) {
+    const key = e.target.value;
+    this.setState(() => ({ key }));
   }
 
   componentDidMount() {
@@ -32,6 +38,9 @@ export default class ViewPost extends React.Component {
     // Once ciphertext is retrieved from the server or the key in the URL hash is updated,
     // Attempt to decrypt
     if (prevState.key !== this.state.key || prevState.cipher !== this.state.cipher) {
+      // Set window hash equal to key
+      // Should only change anything if the user updates the key in the textbox
+      window.location.hash = this.state.key;
       this.attemptDecrypt();
     }
   }
@@ -57,6 +66,7 @@ export default class ViewPost extends React.Component {
   }
 
   attemptDecrypt() {
+    // Use cipher provided by the server and the key provided in the URL
     const decryptedBytes = CryptoJS.AES.decrypt(this.state.cipher, this.state.key);
     const clear = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
@@ -64,6 +74,7 @@ export default class ViewPost extends React.Component {
       // Successful decryption
       this.setState({ clear, error: '' });
     } else {
+      // Incorrect cipher or key
       this.setState({ error: 'Failed to decrypt.', clear: '' });
     }
   }
@@ -71,6 +82,14 @@ export default class ViewPost extends React.Component {
   render() {
     return (
       <div>
+        <p>
+          <input
+            type="text"
+            disabled={this.state.clear} /* Field disabled if decryption was successful */
+            value={this.state.key}
+            onChange={this.onKeyChange}
+          />
+        </p>
         <p>Error: {this.state.error}</p>
         <p>ID: {this.state.id}</p>
         <p>Cipher: {this.state.cipher}</p>

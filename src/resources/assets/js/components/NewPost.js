@@ -81,7 +81,8 @@ export default class NewPost extends React.Component {
     if (window.location.port && (window.location.port !== '80' || window.location.port != '443')) {
       hostname += ':' + window.location.port;
     }
-    this.setState({ error: `${hostname}/view/${this.state.id}/#${this.state.key}` })
+    const postURL = `${hostname}/view/${this.state.id}/#${this.state.key}`;
+    this.setState({ error: `View the post at ${postURL}` })
   }
 
   render() {
