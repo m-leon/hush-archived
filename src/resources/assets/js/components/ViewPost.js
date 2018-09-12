@@ -66,15 +66,20 @@ export default class ViewPost extends React.Component {
   }
 
   attemptDecrypt() {
-    // Use cipher provided by the server and the key provided in the URL
-    const decryptedBytes = CryptoJS.AES.decrypt(this.state.cipher, this.state.key);
-    const clear = decryptedBytes.toString(CryptoJS.enc.Utf8);
+    try {
+      // Use cipher provided by the server and the key provided in the URL
+      const decryptedBytes = CryptoJS.AES.decrypt(this.state.cipher, this.state.key);
+      const clear = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
-    if (clear) {
-      // Successful decryption
-      this.setState({ clear, error: '' });
-    } else {
-      // Incorrect cipher or key
+      if (clear) {
+        // Successful decryption
+        this.setState({ clear, error: '' });
+      } else {
+        // Incorrect cipher or key
+        this.setState({ error: 'Failed to decrypt.', clear: '' });
+      }
+    } catch (e) {
+      // Error thrown if decrypted bytes can't be converted
       this.setState({ error: 'Failed to decrypt.', clear: '' });
     }
   }
