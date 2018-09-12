@@ -17,6 +17,7 @@ class EncryptedPostController extends Controller {
   public function getByID(Request $request) {
     try {
       $post = EncryptedPost::findOrFail($request->id);
+
       if (is_null($post->expiration)) {
         // Post is set to expire after 1 view. Delete from DB. Return to user.
         $post->delete();
@@ -26,6 +27,7 @@ class EncryptedPostController extends Controller {
         throw new \Exception();
       }
 
+      // Limited data sent to user. Don't diosclose the expiration to viewer.
       return response()->json([
         'status' => '0',
         'ciphertext' => $post->ciphertext
@@ -53,11 +55,15 @@ class EncryptedPostController extends Controller {
     $post = new EncryptedPost;
     $post->id = $id;
     $post->ciphertext = $request->cipher;
+
     if ($request->expiration !== 0) {
+      // Convert expiration to TIMESTAMP
       $post->expiration = date('Y-m-d H:i:s', $request->expiration);
     } else {
+      // Post set to expire after 1 view. Stored as a NULL in db
       $post->expiration = NULL;
     }
+
     $post->save();
 
     return response()->json([
