@@ -13,7 +13,13 @@ echo "APP_PORT=80" >> .env # Default port is 8080
 #./init.sh
 # Or for production, use the --production flag
 #./init.sh --production
-docker-compose up
+docker-compose up -d
+# Wait for composer to run
+docker exec -it hush-php /bin/sh
+# Execute within containers' shell
+> cd /app
+> php artisan migrate
+> exit
 ```
 
 ### License
