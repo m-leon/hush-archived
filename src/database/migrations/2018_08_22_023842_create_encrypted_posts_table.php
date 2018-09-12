@@ -17,6 +17,7 @@ class CreateEncryptedPostsTable extends Migration
             $table->uuid('id')->unique();
             $table->primary('id');
             $table->string('ciphertext');
+            $table->timestamp('expiration')->nullable();
             $table->timestamps();
         });
     }

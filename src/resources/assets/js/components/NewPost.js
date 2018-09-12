@@ -1,5 +1,6 @@
 import AES    from 'crypto-js/aes';
 import axios  from 'axios';
+import moment from 'moment';
 import React  from 'react';
 import uuid   from 'uuid/v4';
 
@@ -43,19 +44,28 @@ export default class NewPost extends React.Component {
         clear
       });
 
-      // Update form with generated key
+      // If we generated a key, update the form so the user can see it
       e.target.elements.key.value = key;
 
+      // Calculate expiration date
+      const formExpiration = e.target.elements.expiration.value;
+       // Default to expire after 1 view
+      let expiration = 0;
+      // Calculate the requested expiration time
+      if (formExpiration !== '0') {
+        expiration = moment().add(1, formExpiration);
+        expiration = expiration.unix();
+      }
+
       // Send cipher to server, no other data needs to be sent
-      this.sendCipher(cipher);
+      this.sendCipher({cipher, expiration});
     } catch (e) {
       // Failed to encrypt text. Maybe bad key
       this.setState({ 'error': 'Failed to encrypt. Ensure key is 16 characters.' });
     }
   }
 
-  sendCipher(cipher) {
-    const data = { cipher };
+  sendCipher(data) {
     axios.put(`/api/post/`, data).then(
       (res) => {
         // Successfully posted
@@ -92,6 +102,12 @@ export default class NewPost extends React.Component {
         <form onSubmit={this.submitForm}>
           <textarea placeholder="" name="clear" disabled={this.state.formDisabled}></textarea>
           <input type="text" placeholder="Optional key (recommended 16 chars)" name="key" disabled={this.state.formDisabled} />
+          <label htmlFor="expiration">Expires in</label>
+          <select name="expiration" disabled={this.state.formDisabled}>
+            <option value="0">After 1 view</option>
+            <option value="days">1 day</option>
+            <option value="months">1 month</option>
+          </select>
           <button disabled={this.state.formDisabled}>Post</button>
         </form>
       </div>
