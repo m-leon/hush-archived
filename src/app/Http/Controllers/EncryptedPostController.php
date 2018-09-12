@@ -17,9 +17,15 @@ class EncryptedPostController extends Controller {
   public function getByID(Request $request) {
     try {
       $post = EncryptedPost::findOrFail($request->id);
-      // TODO: Check expiration here
-      // If expiration = 0. Delete row now and return object.
-      // If expiration has past. Delete row and throw exception.
+      if (is_null($post->expiration)) {
+        // Post is set to expire after 1 view. Delete from DB. Return to user.
+        $post->delete();
+      } else if (strtotime($post->expiration) < time()) {
+        // Post's expiration is in the past. Delete from DB. Don't return to user.
+        $post->delete();
+        throw new \Exception();
+      }
+
       return response()->json([
         'status' => '0',
         'ciphertext' => $post->ciphertext
