@@ -33,6 +33,7 @@ export default class NewPost extends React.Component {
     // Use key if provided by user, if no key provided generate with UUIDV4
     const key = (e.target.elements.key.value) ? e.target.elements.key.value : uuid();
     const clear = e.target.elements.clear.value;
+
     try {
       const cipher = AES.encrypt(clear, key).toString();
 
@@ -85,7 +86,6 @@ export default class NewPost extends React.Component {
   }
 
   generatePostURL(id) {
-    // TODO: Find better way to output
     // For now use error to display post's URL
     let hostname = window.location.hostname;
     if (window.location.port && (window.location.port !== '80' || window.location.port != '443')) {

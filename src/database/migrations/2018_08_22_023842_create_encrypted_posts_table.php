@@ -16,7 +16,7 @@ class CreateEncryptedPostsTable extends Migration
         Schema::create('encrypted_posts', function (Blueprint $table) {
             $table->uuid('id')->unique();
             $table->primary('id');
-            $table->string('ciphertext');
+            $table->longText('ciphertext');
             $table->timestamp('expiration')->nullable();
             $table->timestamps();
         });

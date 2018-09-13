@@ -89,7 +89,7 @@ export default class ViewPost extends React.Component {
       <div className="viewPost">
         <h3>Post {this.state.id}</h3>
         { this.state.error && <p>{this.state.error}</p> }
-        <p className="viewPost__message">{this.state.clear}</p>
+        { this.state.clear && <p className="viewPost__message">{this.state.clear}</p> }
         <span className="viewPost__options">
           <label htmlFor="key">Key:</label>
           <input
