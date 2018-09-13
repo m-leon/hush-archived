@@ -1,0 +1,55 @@
+.newPost {
+  margin: 2rem auto;
+  width: 80%;
+
+  .newPost__message {
+    background: $off-white;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, .3);
+    box-sizing: border-box;
+    display: block;
+    padding: 0.6rem;
+    width: 100%;
+  }
+
+  .newPost__options {
+    display: flex;
+    margin-top: 2rem;
+    justify-content: space-between;
+    width: 100%;
+
+    * {
+      margin-left: 0.7rem;
+    }
+
+    .newPost__key {
+      background: $off-white;
+      border: 0;
+      flex-grow: 2;
+      margin-left: 0;
+      padding: 0.5rem;
+    }
+
+    label {
+      line-height: 3rem;
+    }
+
+    select {
+      flex-grow: 1;
+      background: $off-white;
+      border: none;
+    }
+  }
+
+  button {
+    background: $light-blue;
+    border: none;
+    border-radius: 4px;
+    color: $dark-blue;
+    display: block;
+    height: 3rem;
+    margin: 3rem auto;
+    width: 50%;
+  }
+}

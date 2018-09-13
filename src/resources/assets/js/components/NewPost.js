@@ -97,17 +97,33 @@ export default class NewPost extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="newPost">
         { this.state.error && <p>{this.state.error}</p> }
+        <h3>Post Your Message</h3>
         <form onSubmit={this.submitForm}>
-          <textarea placeholder="" name="clear" disabled={this.state.formDisabled}></textarea>
-          <input type="text" placeholder="Optional key (recommended 16 chars)" name="key" disabled={this.state.formDisabled} />
-          <label htmlFor="expiration">Expires in</label>
-          <select name="expiration" disabled={this.state.formDisabled}>
-            <option value="0">After 1 view</option>
-            <option value="days">1 day</option>
-            <option value="months">1 month</option>
-          </select>
+          <textarea
+            className="newPost__message"
+            disabled={this.state.formDisabled}
+            name="clear"
+            placeholder=""
+            rows="10"
+          >
+          </textarea>
+          <span className="newPost__options">
+            <input
+              className="newPost__key"
+              disabled={this.state.formDisabled}
+              name="key"
+              placeholder="Key (recommended 16 chars)"
+              type="text"
+            />
+            <label htmlFor="expiration">Expires in</label>
+            <select name="expiration" disabled={this.state.formDisabled}>
+              <option value="0">After 1 view</option>
+              <option value="days">1 day</option>
+              <option value="months">1 month</option>
+            </select>
+          </span>
           <button disabled={this.state.formDisabled}>Post</button>
         </form>
       </div>
