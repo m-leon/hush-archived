@@ -1,0 +1,28 @@
+.viewPost {
+  margin: 2rem auto;
+  width: 80%;
+
+  .viewPost__message {
+    background: $off-white;
+    color: $dark-blue;
+    line-height: 2rem;
+    margin: 0;
+    padding: 1rem;
+  }
+
+  .viewPost__options {
+    display: block;
+    margin: 2rem auto;
+    text-align: center;
+    width: 50%;
+
+    label {
+      width: 20%;
+      margin-right: 5%;
+    }
+
+    input {
+      width: 75%;
+    }
+  }
+}
