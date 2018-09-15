@@ -2,7 +2,7 @@ version: '3'
 
 services:
   npm:
-    container_name: ${APP_NAME}-npm
+    container_name: hush-npm
     image: node:10.9.0-slim
     user: ${APP_UID}:${APP_GID}
     env_file:
@@ -14,7 +14,7 @@ services:
     volumes:
       - ./src/:/app/
   composer:
-    container_name: ${APP_NAME}-composer
+    container_name: hush-composer
     image: composer:1.7.2
     user: ${APP_UID}:${APP_GID}
     working_dir: /app/
@@ -22,14 +22,14 @@ services:
     volumes:
       - ./src/:/app/
   db:
-    container_name: ${APP_NAME}-db
+    container_name: hush-db
     image: mariadb:10.3.9
     env_file:
       - .env
     volumes:
       - ./db_store/:/var/lib/mysql/
   php:
-    container_name: ${APP_NAME}-php
+    container_name: hush-php
     build:
       context: ./build
       dockerfile: php.docker
@@ -46,8 +46,8 @@ services:
       - ./src/storage/:/app/storage/:rw
       - ./build/php.${APP_ENV}.ini:/usr/local/etc/php/php.ini:ro
   www:
-    container_name: ${APP_NAME}-www
-    image: nginx:1.15.2-alpine
+    container_name: hush-www
+    image: nginx:1.14.0-alpine
     depends_on:
       - db
       - php

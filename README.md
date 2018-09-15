@@ -7,20 +7,20 @@ Secret keys are stored in the [fragment identifier](https://tools.ietf.org/html/
 ```
 git clone https://github.com/m-leon/hush.git
 cd hush
-echo "APP_URL=hush.maxleon.net" >> .env
+# Set URL to where you want the server to listen to
+echo "APP_URL=hush.test" >> .env
 echo "APP_PORT=80" >> .env # Default port is 8080
 # For development environment
-#./init.sh
+./init.sh
 # Or for production, use the --production flag
 #./init.sh --production
 docker-compose up -d
-# Wait for composer to run
-docker exec -it hush-php /bin/sh
-# Execute within containers' shell
-> cd /app
-> php artisan migrate
-> exit
 ```
+
+### TODO
+* Use docker secrets to manage DB passwords and other sensitive information
+* Add healthchecks to run 'php' after 'db' & 'composer' have initialized/finished
+* Add healthchecks to run 'www' after 'php' & 'npm' have initialized
 
 ### License
 [MIT](https://opensource.org/licenses/MIT)
