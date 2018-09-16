@@ -1,0 +1,7 @@
+FROM nginx:1.14.0-alpine
+
+COPY www-run.sh /usr/local/bin/www-run.sh
+
+RUN chmod +x /usr/local/bin/www-run.sh
+
+CMD ["/usr/local/bin/www-run.sh"]

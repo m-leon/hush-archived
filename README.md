@@ -19,8 +19,6 @@ docker-compose up -d
 
 ### TODO
 * Use docker secrets to manage DB passwords and other sensitive information
-* Add healthchecks to run 'php' after 'db' & 'composer' have initialized/finished
-* Add healthchecks to run 'www' after 'php' & 'npm' have initialized
 
 ### License
 [MIT](https://opensource.org/licenses/MIT)
