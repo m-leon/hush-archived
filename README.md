@@ -9,16 +9,17 @@ For a development environment:
 ```
 git clone https://github.com/m-leon/hush.git
 cd hush/src
-composer install
-yarn install
-yarn dev
+# With yarn installed
+#yarn install
+#yarn dev
+# Without yarn installed
+#docker run --rm -it -v $(pwd):/app -w /app node:slim yarn yarn install
+#docker run --rm -it -v $(pwd):/app -w /app node:slim yarn yarn dev
 cp .env.template .env
-php artisan key:generate
+# With PHP installed
+#php artisan key:generate
 cd ..
 cp .env.ex .env
-# Edit docker-compose to use a user that has write permissions on Laravel's cache directories
-# If that's the current user, you can use:
-sed -i -e '/user:/ s/: .*/: '"$(id -u)"':'"$(id -g)"'/' ./docker-compose.yml
 docker-compose up
 ```
 
