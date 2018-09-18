@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    container_name: hush-db
+    image: mariadb:10.3.9
+    env_file:
+      - .env
+    volumes:
+      - ./db_store/:/var/lib/mysql/
+  php:
+    container_name: hush-php
+    build:
+      context: ./build/php
+    user: 1000:1000
+    env_file:
+      - .env
+    volumes:
+      - ./src/:/app/:ro
+      - ./src/bootstrap/cache/:/app/bootstrap/cache/:rw
+      - ./src/storage/:/app/storage/:rw
+      - ./build/php/php.local.ini:/usr/local/etc/php/php.ini:ro
+  www:
+    container_name: hush-www
+    image: nginx:1.14.0-alpine
+    volumes:
+      - ./src/:/app/:ro
+      - ./build/www/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - '8080:80'
