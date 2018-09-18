@@ -16,8 +16,9 @@ cd hush/src
 #docker run --rm -it -v $(pwd):/app -w /app node:slim yarn yarn install
 #docker run --rm -it -v $(pwd):/app -w /app node:slim yarn yarn dev
 cp .env.template .env
-# With PHP installed
-#php artisan key:generate
+# Generate APP_KEY without artisan. Necessary without php & composer
+#KEY=$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | base64)
+#sed -i "s%^\(APP_KEY=\).*$%\1base64:$KEY%" ./.env
 cd ..
 cp .env.ex .env
 docker-compose up
