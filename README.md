@@ -13,8 +13,8 @@ cd hush/src
 #yarn install
 #yarn dev
 # Without yarn installed
-#docker run --rm -it -v $(pwd):/app -w /app node:slim yarn yarn install
-#docker run --rm -it -v $(pwd):/app -w /app node:slim yarn yarn dev
+#docker run --rm -it -v $(pwd):/app -w /app node:slim yarn install
+#docker run --rm -it -v $(pwd):/app -w /app node:slim yarn dev
 cp .env.template .env
 # Generate APP_KEY without artisan. Necessary without php & composer
 #KEY=$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | base64)
