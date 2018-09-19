@@ -24,6 +24,8 @@ cp .env.ex .env
 docker-compose up
 ```
 
+For a production environment read README.production.md
+
 ### Audit
 This app has only been audited by me. If you are willing and able to audit please contact me at max@maxleon.net
 
