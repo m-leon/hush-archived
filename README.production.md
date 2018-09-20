@@ -27,8 +27,16 @@ cp .env.ex .env
 ```
 
 Depending on your deployment, you may now want to edit docker-compose.yml directly and change how ports are exposed on the 'www' container.
+
+
 You can now run with `docker-compose up`.
 
+Now that the containers are running, do the following to build the db:
+```
+docker exec -it hush-php /bin/sh
+cd /app
+php artisan migrate
+```
 
 To set up hush with systemd edit the following file to use with your environment and place the file in `/etc/systemd/system/hush.service`.
 ```

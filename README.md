@@ -3,6 +3,9 @@ A simple web app built with Laravel and React similar to pastebin. The frontend 
 
 Secret keys are stored in the [fragment identifier](https://tools.ietf.org/html/rfc1808#section-2.4.1) so they are never sent to the server. This also allows for URLs to be able to sent to other users through known safe channels to prevent sniffing.
 
+### Live demo
+Online at https://hush.maxleon.net/. This host is for demonstration purposes only. Data is subject to being removed.
+
 ### How to run
 
 For a development environment:
