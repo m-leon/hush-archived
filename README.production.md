@@ -7,7 +7,7 @@ git clone https://github.com/m-leon/hush.git
 cd hush/src
 docker run --rm -it -v $(pwd):/app -w /app node:slim yarn install
 docker run --rm -it -v $(pwd):/app -w /app node:slim yarn production
-cp .env.template .env
+cp .env.ex .env
 
 # Open .env and set:
 #   APP_ENV=production
