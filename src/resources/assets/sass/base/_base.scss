@@ -3,10 +3,9 @@ html {
 }
 
 body {
-  background: $dark-blue;
+  background: #F7F7F7;
   box-sizing: border-box;
-  color: $off-white;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 1.6rem;
   width: 100%;
 }
@@ -17,4 +16,8 @@ button {
 
 button:disabled {
   cursor: default;
+}
+
+textarea {
+  font-family: 'Raleway', sans-serif;
 }

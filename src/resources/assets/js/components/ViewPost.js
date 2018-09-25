@@ -87,19 +87,21 @@ export default class ViewPost extends React.Component {
   render() {
     return (
       <div className="viewPost">
-        <h3>Post {this.state.id}</h3>
-        { this.state.error && <p>{this.state.error}</p> }
-        { this.state.clear && <p className="viewPost__message">{this.state.clear}</p> }
-        <span className="viewPost__options">
-          <label htmlFor="key">Key:</label>
-          <input
-            disabled={this.state.clear} /* Field disabled if decryption was successful */
-            name="key"
-            onChange={this.onKeyChange}
-            type="text"
-            value={this.state.key}
-          />
-        </span>
+        <h3 className="viewPost__title">Post {this.state.id}</h3>
+        <div className="viewPost__container">
+          { this.state.error && <p className="viewPost__error">{this.state.error}</p> }
+          { this.state.clear && <p className="viewPost__message">{this.state.clear}</p> }
+          <span className="viewPost__options">
+            <label htmlFor="key">Key:</label>
+            <input
+              disabled={this.state.clear} /* Field disabled if decryption was successful */
+              name="key"
+              onChange={this.onKeyChange}
+              type="text"
+              value={this.state.key}
+            />
+          </span>
+        </div>
       </div>
     );
   }

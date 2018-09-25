@@ -9,12 +9,11 @@ export default class NewPost extends React.Component {
     super(props);
 
     this.state = {
-      formDisabled: false,
-      id: '',
-      key: '',
-      cipher: '',
-      clear: '',
-      error: ''
+      error: '',            // Outputs errors to user
+      formDisabled: false,  // Prevents user from double posting, disables the submit button once you initiate the process
+      id: '',               // Holds the returned from the server once the ciphertext is submitted
+      key: '',              // Holds the key from the form
+      postURL: ''           // Holds the URL of the post INCLUDING the key generated from generatePostURL
     };
 
     this.submitForm = this.submitForm.bind(this);
@@ -40,9 +39,7 @@ export default class NewPost extends React.Component {
       // Update state values to be submitted
       this.setState({
         formDisabled: true,
-        cipher,
-        key,
-        clear
+        key
       });
 
       // If we generated a key, update the form so the user can see it
@@ -59,10 +56,10 @@ export default class NewPost extends React.Component {
       }
 
       // Send cipher to server, no other data needs to be sent
-      this.sendCipher({cipher, expiration});
+      this.sendCipher({ cipher, expiration });
     } catch (e) {
       // Failed to encrypt text. Maybe bad key
-      this.setState({ 'error': 'Failed to encrypt. Ensure key is 16 characters.' });
+      this.setState({ 'error': 'Failed to encrypt.' });
     }
   }
 
@@ -92,14 +89,20 @@ export default class NewPost extends React.Component {
       hostname += ':' + window.location.port;
     }
     const postURL = `${hostname}/view/${this.state.id}/#${this.state.key}`;
-    this.setState({ error: `View the post at ${postURL}` })
+    this.setState({ postURL, error: '' })
   }
 
   render() {
     return (
       <div className="newPost">
+        <h3 className="newPost__title">Post Your Message</h3>
         { this.state.error && <p>{this.state.error}</p> }
-        <h3>Post Your Message</h3>
+        { this.state.postURL &&
+          <div>
+            <p className="newPost__url">This post is available at:</p>
+            <p className="newPost__url"><a href={`//${this.state.postURL}`}>{this.state.postURL}</a></p>
+          </div>
+        }
         <form onSubmit={this.submitForm}>
           <textarea
             className="newPost__message"
