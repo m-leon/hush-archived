@@ -108,7 +108,7 @@ export default class NewPost extends React.Component {
             className="newPost__message"
             disabled={this.state.formDisabled}
             name="clear"
-            placeholder=""
+            placeholder="Enter your message here"
             rows="10"
           >
           </textarea>

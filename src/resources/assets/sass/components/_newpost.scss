@@ -20,10 +20,11 @@
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
       background: darken(#F7F7F7, 5%);
       line-height: 1.4rem;
-      margin: 4rem 0;
+      margin: 2rem 0;
       outline: none;
       padding: 1rem;
       transition: background-color 0.2s ease-in-out 0s;
+      width: 100%;
     }
 
     .newPost__message:focus, .newPost__key:focus {
@@ -32,21 +33,17 @@
 
     .newPost__message {
       box-sizing: border-box;
+      margin: 3rem 0;
       resize: vertical;
       width: 100%;
     }
 
     .newPost__options {
       display: flex;
-      flex-wrap: nowrap;
-      justify-content: space-between;
+      flex-wrap: wrap;
 
-      label {
-        line-height: 12.2rem;
-      }
-
-      .newPost__key, select {
-        flex-grow:  2;
+      .newPost__key, select, label {
+        align-self: center;
       }
     }
 
@@ -64,6 +61,30 @@
     button:hover {
       background: darken(#7CE2BB, 10%);
       border-bottom: 1rem solid #7CE2BB;
+    }
+  }
+}
+
+
+@media (min-width: 1000px) {
+  .newPost {
+    form {
+      .newPost__key, select {
+        width: auto;
+      }
+
+      .newPost__options {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+
+        label {
+          line-height: 12.2rem;
+        }
+
+        .newPost__key, select {
+          flex-grow:  2;
+        }
+      }
     }
   }
 }
