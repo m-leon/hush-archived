@@ -3,18 +3,17 @@ import Axios  from 'axios';
 import Moment from 'moment';
 import Uuid   from 'uuid/v4';
 
-export const submit = async (e) => {
+export default async (e) => {
   e.preventDefault();
   // Use key if provided by user, if no key provided generate with UUIDV4
   const key = (e.target.elements.key.value) ? e.target.elements.key.value : Uuid();
+  // If we generated a key, update the form so the user can see it
+  e.target.elements.key.value = key;
 
   const clear = e.target.elements.clear.value;
   try {
     // Encrypt cleartext
-    const cipher = AES.encrypt(clear, key).toString();
-
-    // If we generated a key, update the form so the user can see it
-    e.target.elements.key.value = key;
+    const cipher = encrypt(clear, key);
 
     // Calculate expiration date
     const expiration = calculateExpiration(e.target.elements.expiration.value);
@@ -38,7 +37,11 @@ export const submit = async (e) => {
   }
 }
 
-const calculateExpiration = (formExpiration) => {
+export const encrypt = (clear, key) => {
+  return AES.encrypt(clear, key).toString();
+}
+
+export const calculateExpiration = (formExpiration) => {
   // Default to expire after 1 view
  let expiration = 0;
 

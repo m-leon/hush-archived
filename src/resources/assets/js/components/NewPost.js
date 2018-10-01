@@ -1,7 +1,7 @@
 import React  from 'react';
 
 import NewPostURL from './NewPostURL';
-import { submit }   from '../utils/SendForm';
+import SendForm   from '../utils/SendForm';
 
 export default class NewPost extends React.Component {
   constructor(props) {
@@ -24,7 +24,7 @@ export default class NewPost extends React.Component {
         <form onSubmit={
           async (e) => {
             this.setState({ formDisabled: true });
-            const newState = await submit(e);
+            const newState = await SendForm(e);
             this.setState({ ...newState });
           }
         }>
