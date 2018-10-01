@@ -14,10 +14,11 @@ class EncryptedPostController extends Controller {
    * @param  Request  $request
    * @return Response
    */
-  public function getByID(Request $request) {
+  public function show($id) {
     try {
-      $post = EncryptedPost::findOrFail($request->id);
+      $post = EncryptedPost::findOrFail($id);
 
+      // Check post's expiration
       if (is_null($post->expiration)) {
         // Post is set to expire after 1 view. Delete from DB. Return to user.
         $post->delete();
@@ -34,7 +35,7 @@ class EncryptedPostController extends Controller {
       ]);
     } catch (\Exception $e) {
       return response()->json([
-        'status' => '22' // 'Invalid argument' per errno.h
+        'status' => '2'
       ]);
     }
   }

@@ -64,7 +64,7 @@ export default class NewPost extends React.Component {
   }
 
   sendCipher(data) {
-    axios.put(`/api/post/`, data).then(
+    axios.post(`/api/post/`, data).then(
       (res) => {
         // Successfully posted
         if (typeof(res.data.status) !== 'undefined' && res.data.status === '0') {
