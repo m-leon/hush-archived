@@ -20,7 +20,7 @@ export const submit = async (e) => {
     const expiration = calculateExpiration(e.target.elements.expiration.value);
 
     // Send cipher to server, no other data needs to be sent
-    const res = await Axios.post(`/api/post2/`, { cipher, expiration });
+    const res = await Axios.post(`/api/post/`, { cipher, expiration });
 
     // Successfully posted
     if (typeof(res.data.status) !== 'undefined' && res.data.status === '0') {
