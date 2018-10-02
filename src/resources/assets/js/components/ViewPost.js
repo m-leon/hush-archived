@@ -1,6 +1,7 @@
-import axios    from 'axios';
-import CryptoJS from 'crypto-js';
-import React    from 'react';
+import React from 'react';
+
+import { decrypt }    from '../utils/Encryption';
+import RetrieveCipher from '../utils/RetrieveCipher';
 
 export default class ViewPost extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ export default class ViewPost extends React.Component {
       clear: '',
       error: 'Loading...'
     };
+
     this.onKeyChange = this.onKeyChange.bind(this);
   }
 
@@ -25,7 +27,9 @@ export default class ViewPost extends React.Component {
     // Check if invalid ID passed
     if (this.state.id) {
       // Use ID given in URL to retrieve ciphertext from server
-      this.retrieveCipher();
+      RetrieveCipher(this.state.id).then((res) => {
+        this.setState(() => ({ ...res }));
+      });
     }
 
     // Update state if location's hash changes
@@ -41,35 +45,9 @@ export default class ViewPost extends React.Component {
       // Set window hash equal to key
       // Should only change anything if the user updates the key in the textbox
       window.location.hash = this.state.key;
-      this.attemptDecrypt();
-    }
-  }
 
-  retrieveCipher() {
-    // Make asynchronous request to backend for ciphertext of given ID
-    axios.get(`/api/post/${this.state.id}`).then(
-      (res) => {
-        // Successfully retrieved ciphertext
-        if (typeof(res.data.status) !== 'undefined' && res.data.status === '0') {
-          this.setState({ cipher: res.data.ciphertext });
-        // Server didn't return with a status == 0, ignore data
-        } else {
-          this.setState({ error: 'Failed to retrieve cipher.' });
-        }
-      }
-    ).catch(
-      // Catch network errors
-      (e) => {
-        this.setState({ error: 'Failed to retrieve cipher. Check your connection.' })
-      }
-    );
-  }
-
-  attemptDecrypt() {
-    try {
       // Use cipher provided by the server and the key provided in the URL
-      const decryptedBytes = CryptoJS.AES.decrypt(this.state.cipher, this.state.key);
-      const clear = decryptedBytes.toString(CryptoJS.enc.Utf8);
+      const clear = decrypt(this.state.cipher, this.state.key);
 
       if (clear) {
         // Successful decryption
@@ -78,9 +56,6 @@ export default class ViewPost extends React.Component {
         // Incorrect cipher or key
         this.setState({ error: 'Failed to decrypt.', clear: '' });
       }
-    } catch (e) {
-      // Error thrown if decrypted bytes can't be converted
-      this.setState({ error: 'Failed to decrypt.', clear: '' });
     }
   }
 

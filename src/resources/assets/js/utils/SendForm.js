@@ -1,7 +1,8 @@
-import AES    from 'crypto-js/aes';
 import Axios  from 'axios';
 import Moment from 'moment';
 import Uuid   from 'uuid/v4';
+
+import { encrypt } from './Encryption';
 
 export default async (e) => {
   e.preventDefault();
@@ -37,10 +38,6 @@ export default async (e) => {
   }
 }
 
-export const encrypt = (clear, key) => {
-  return AES.encrypt(clear, key).toString();
-}
-
 export const calculateExpiration = (formExpiration) => {
   // Default to expire after 1 view
  let expiration = 0;
@@ -52,4 +49,4 @@ export const calculateExpiration = (formExpiration) => {
  }
 
  return expiration;
-};
+}

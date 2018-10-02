@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 
 import NewPostURL from './NewPostURL';
 import SendForm   from '../utils/SendForm';
@@ -22,10 +22,11 @@ export default class NewPost extends React.Component {
         { this.state.error && <p>{this.state.error}</p> }
         <NewPostURL id={this.state.id} encKey={this.state.key} />
         <form onSubmit={
-          async (e) => {
+          (e) => {
             this.setState({ formDisabled: true });
-            const newState = await SendForm(e);
-            this.setState({ ...newState });
+            SendForm(e).then((res) => {
+              this.setState({ ...res });
+            });
           }
         }>
           <textarea
