@@ -14,6 +14,10 @@ until php artisan check:db; do
   sleep 5
 done
 
+DOCKER_HOST=$(/sbin/ip route|awk '/default/ { print $3 }')
+cat >/usr/local/etc/php-fpm.d/env.conf <<EOL
+env[DOCKER_HOST] = ${DOCKER_HOST}
+EOL
 php artisan migrate
 
 php-fpm

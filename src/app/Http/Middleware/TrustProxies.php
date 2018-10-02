@@ -12,7 +12,7 @@ class TrustProxies extends Middleware
      *
      * @var array
      */
-    protected $proxies = ['192.168.0.0/16'];
+    protected $proxies;
 
     /**
      * The headers that should be used to detect proxies.
@@ -20,4 +20,8 @@ class TrustProxies extends Middleware
      * @var int
      */
     protected $headers = Request::HEADER_X_FORWARDED_ALL;
+
+    public function __construct() {
+      $this->proxies = [ getenv('DOCKER_HOST') ];
+    }
 }
