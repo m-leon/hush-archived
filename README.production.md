@@ -1,6 +1,6 @@
-### How to run
+### Hosting (Production)
 
-For a production environment:
+Run the following commands as root
 ```
 cd /opt
 git clone https://github.com/m-leon/hush.git

@@ -6,22 +6,29 @@ Secret keys are stored in the [fragment identifier](https://tools.ietf.org/html/
 ### Live demo
 Online at https://hush.maxleon.net/. This host is for demonstration purposes only. Data is subject to being removed.
 
-### How to run
+### Hosting (Development)
 
-For a development environment:
 ```
 git clone https://github.com/m-leon/hush.git
 cd hush/src
-# With yarn installed
-#yarn install
-#yarn dev
-# Without yarn installed
-#docker run --rm -it -v $(pwd):/app -w /app node:slim yarn install
-#docker run --rm -it -v $(pwd):/app -w /app node:slim yarn dev
+```
+
+With yarn installed
+```
+yarn install
+yarn dev
+```
+Without yarn installed
+```
+docker run --rm -it -v $(pwd):/app -w /app node:slim yarn install
+docker run --rm -it -v $(pwd):/app -w /app node:slim yarn dev
+```
+Continued
+```
 cp .env.ex .env
-# Generate APP_KEY without artisan. Necessary without php & composer
-#KEY=$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | base64)
-#sed -i "s%^\(APP_KEY=\).*$%\1base64:$KEY%" ./.env
+# Generate APP_KEY without artisan (without php & composer)
+KEY=$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | base64)
+sed -i "s%^\(APP_KEY=\).*$%\1base64:$KEY%" ./.env
 cd ..
 cp .env.ex .env
 docker-compose up
