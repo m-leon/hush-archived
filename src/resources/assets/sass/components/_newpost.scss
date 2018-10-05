@@ -1,6 +1,6 @@
 .newPost {
   .newPost__title {
-    background: #7CE2BB;
+    background: $highlight;
     margin: 0;
     padding: 3rem 0;
     text-align: center;
@@ -14,11 +14,13 @@
     margin: 0 auto;
     width: 80%;
 
-    .newPost__message, .newPost__key, select {
+    .newPost__message,
+    .newPost__key,
+    select {
       border: none;
       border-radius: 0.4rem;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
-      background: darken(#F7F7F7, 2%);
+      background: darken($off-white, 2%);
       line-height: 1.4rem;
       margin: 2rem 0;
       outline: none;
@@ -27,12 +29,12 @@
       width: 100%;
     }
 
-    .newPost__message:focus, .newPost__key:focus {
+    .newPost__message:focus,
+    .newPost__key:focus {
       background: white;
     }
 
     .newPost__message {
-      box-sizing: border-box;
       margin: 3rem 0;
       resize: vertical;
       width: 100%;
@@ -42,25 +44,27 @@
       display: flex;
       flex-wrap: wrap;
 
-      .newPost__key, select, label {
+      .newPost__key,
+      select,
+      label {
         align-self: center;
       }
     }
 
     button {
-      background: #7CE2BB;
+      background: $highlight;
       border: none;
-      border-bottom: 1rem solid darken(#7CE2BB, 10%);
+      border-bottom: 1rem solid darken($highlight, 10%);
       font-weight: bold;
       outline: none;
       padding: 3rem;
       transition: all 0.2s ease-in-out 0s;
       width: 100%;
-    }
 
-    button:hover {
-      background: darken(#7CE2BB, 10%);
-      border-bottom: 1rem solid #7CE2BB;
+      &:hover {
+        background: darken($highlight, 10%);
+        border-bottom: 1rem solid $highlight;
+      }
     }
   }
 }
@@ -69,20 +73,14 @@
 @media (min-width: 1000px) {
   .newPost {
     form {
-      .newPost__key, select {
-        width: auto;
-      }
-
       .newPost__options {
         flex-wrap: nowrap;
         justify-content: space-between;
 
-        label {
-          line-height: 12.2rem;
-        }
-
-        .newPost__key, select {
+        .newPost__key,
+        select {
           flex-grow:  2;
+          width: auto;
         }
       }
     }

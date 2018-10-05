@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { decrypt }    from '../utils/Encryption';
 import RetrieveCipher from '../utils/RetrieveCipher';
@@ -76,6 +77,7 @@ export default class ViewPost extends React.Component {
               value={this.state.key}
             />
           </span>
+          <Link to='/' className="viewPost__newPost-btn">New Post</Link>
         </div>
       </div>
     );
