@@ -42,7 +42,7 @@ export default class NewPost extends React.Component {
               className="newPost__key"
               disabled={this.state.formDisabled}
               name="key"
-              placeholder="Key (recommended 16 chars)"
+              placeholder="Optional Key (recommended 16 chars)"
               type="text"
             />
             <label htmlFor="expiration">Expires in</label>
