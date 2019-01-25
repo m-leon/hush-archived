@@ -8,30 +8,21 @@ Online at https://hush.maxleon.net/. This host is for demonstration purposes onl
 
 ### Hosting (Development)
 
+Requirements:
+* Git
+* Yarn (or npm)
+* PHP
+* PHP Extensions: BCMath, JSON, MBString, PDO SQLite 3, XML
 ```
 git clone https://github.com/m-leon/hush.git
 cd hush/src
-```
-
-With yarn installed
-```
 yarn install
 yarn dev
-```
-Without yarn installed
-```
-docker run --rm -it -v $(pwd):/app -w /app node:slim yarn install
-docker run --rm -it -v $(pwd):/app -w /app node:slim yarn dev
-```
-Continued
-```
 cp .env.ex .env
-# Generate APP_KEY without artisan (without php & composer)
-KEY=$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | base64)
-sed -i "s%^\(APP_KEY=\).*$%\1base64:$KEY%" ./.env
-cd ..
-cp .env.ex .env
-docker-compose up
+touch /tmp/hush.sqlite # If you want to change it, change in .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
 ```
 
 For a production environment read README.production.md
