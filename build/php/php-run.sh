@@ -4,15 +4,10 @@ cd /app
 export COMPOSER_ALLOW_SUPERUSER=1
 composer install
 
-# Correct permissions on Laravel's cache directories
+# Correct permissions on Laravel's cache directories and database
 chown -R www-data:www-data /app/storage
 chown -R www-data:www-data /app/bootstrap/cache
-
-# Wait till DB is started
-until php artisan check:db; do
-  echo "Waiting for database connection to start"
-  sleep 5
-done
+chown www-data:www-data /tmp/hush.sqlite
 
 DOCKER_HOST=$(/sbin/ip route|awk '/default/ { print $3 }')
 cat >/usr/local/etc/php-fpm.d/env.conf <<EOL

@@ -1,20 +1,12 @@
 version: '3'
 
 services:
-  db:
-    container_name: hush-db
-    image: mariadb:10.3.9
-    env_file:
-      - .env
-    volumes:
-      - ./db_store/:/var/lib/mysql/
   php:
     container_name: hush-php
     build:
       context: ./build/php
-    env_file:
-      - .env
     volumes:
+      - ./hush.sqlite:/tmp/hush.sqlite:rw
       - ./src/:/app/:ro
       - ./src/vendor/:/app/vendor/:rw
       - ./src/bootstrap/cache/:/app/bootstrap/cache/:rw

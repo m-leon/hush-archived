@@ -1,5 +1,3 @@
-**NOTE:** Outdated info.
-
 ### Hosting (Production)
 
 Run the following commands as root
@@ -21,15 +19,10 @@ KEY=$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | base64)
 sed -i "s%^\(APP_KEY=\).*$%\1base64:$KEY%" ./.env
 
 cd ..
-cp .env.ex .env
-
-# Open .env and set:
-#   MYSQL_PASSWORD=(your password)
-#   MYSQL_ROOT_PASSWORD=(your password #2)
+touch hush.sqlite
 ```
 
 Depending on your deployment, you may now want to edit docker-compose.yml directly and change how ports are exposed on the 'www' container.
-
 
 You can now run with `docker-compose up`.
 
@@ -40,6 +33,7 @@ cd /app
 php artisan migrate
 ```
 
+### Systemd
 To set up hush with systemd edit the following file to use with your environment and place the file in `/etc/systemd/system/hush.service`.
 ```
 [Unit]
