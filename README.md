@@ -12,10 +12,12 @@ Requirements:
 * Git
 * Yarn (or npm)
 * PHP
+* Composer
 * PHP Extensions: BCMath, JSON, MBString, PDO SQLite 3, XML
 ```
 git clone https://github.com/m-leon/hush.git
 cd hush/src
+composer install
 yarn install
 yarn dev
 cp .env.ex .env
