@@ -13,8 +13,6 @@ services:
     container_name: hush-php
     build:
       context: ./build/php
-    env_file:
-      - ./src/.env
     volumes:
       - ./hush.db:/tmp/hush.db:rw
       - ./src/:/app/:ro
