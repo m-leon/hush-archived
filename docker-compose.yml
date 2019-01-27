@@ -22,7 +22,7 @@ services:
       - ./build/php/php.local.ini:/usr/local/etc/php/php.ini:ro
   www:
     container_name: hush-www
-    image: nginx:1.14.0-alpine
+    image: nginx:1.15.8-alpine
     volumes:
       - ./src/:/app/:ro
       - ./build/www/nginx.conf:/etc/nginx/conf.d/default.conf:ro

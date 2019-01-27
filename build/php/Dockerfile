@@ -1,4 +1,4 @@
-FROM php:7.2.8-fpm-alpine3.7
+FROM php:7.3.1-fpm-alpine3.8
 
 COPY php-run.sh /usr/local/bin/php-run.sh
 
