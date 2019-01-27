@@ -11,4 +11,11 @@ cat >/usr/local/etc/php-fpm.d/env.conf <<EOL
 env[DOCKER_HOST] = ${DOCKER_HOST}
 EOL
 
+sleep 5
+# Wait till builder is complete
+while [ ! -f /app/BUILD_COMPLETE ]; do
+  echo "Waiting for builder to finish"
+  sleep 5
+done
+
 php-fpm
