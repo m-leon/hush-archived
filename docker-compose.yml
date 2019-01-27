@@ -1,12 +1,22 @@
 version: '3'
 
 services:
+  builder:
+    container_name: hush-builder
+    build:
+      context: ./build/builder
+    volumes:
+      - ./hush.db:/tmp/hush.db:rw
+      - ./src/:/app/:rw
+      - ./build/php/php.local.ini:/usr/local/etc/php/php.ini:ro
   php:
     container_name: hush-php
     build:
       context: ./build/php
+    env_file:
+      - ./src/.env
     volumes:
-      - ./hush.sqlite:/tmp/hush.sqlite:rw
+      - ./hush.db:/tmp/hush.db:rw
       - ./src/:/app/:ro
       - ./src/vendor/:/app/vendor/:rw
       - ./src/bootstrap/cache/:/app/bootstrap/cache/:rw

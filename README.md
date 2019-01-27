@@ -21,7 +21,7 @@ composer install
 yarn install
 yarn dev
 cp .env.ex .env
-touch /tmp/hush.sqlite # If you want to change it, change in .env
+touch /tmp/hush.db        # If you want to change it, change in .env
 php artisan key:generate
 php artisan migrate
 php artisan serve

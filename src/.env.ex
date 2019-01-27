@@ -7,7 +7,7 @@ APP_URL=hush.test
 LOG_CHANNEL=stack
 
 DB_CONNECTION=sqlite
-DB_DATABASE=/tmp/hush.sqlite
+DB_DATABASE=/tmp/hush.db
 
 BROADCAST_DRIVER=log
 CACHE_DRIVER=file

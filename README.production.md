@@ -5,8 +5,6 @@ Run the following commands as root
 cd /opt
 git clone https://github.com/m-leon/hush.git
 cd hush/src
-docker run --rm -it -v $(pwd):/app -w /app node:slim yarn install
-docker run --rm -it -v $(pwd):/app -w /app node:slim yarn production
 cp .env.ex .env
 
 # Open .env and set:
@@ -14,24 +12,13 @@ cp .env.ex .env
 #   APP_DEBUG=false
 #   APP_URL=hush.example.com
 
-# Generate APP_KEY without artisan. Necessary without php & composer
-KEY=$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | base64)
-sed -i "s%^\(APP_KEY=\).*$%\1base64:$KEY%" ./.env
-
 cd ..
-touch hush.sqlite
+touch hush.db
 ```
 
 Depending on your deployment, you may now want to edit docker-compose.yml directly and change how ports are exposed on the 'www' container.
 
 You can now run with `docker-compose up`.
-
-Now that the containers are running, do the following to build the db:
-```
-docker exec -it hush-php /bin/sh
-cd /app
-php artisan migrate
-```
 
 ### Systemd
 To set up hush with systemd edit the following file to use with your environment and place the file in `/etc/systemd/system/hush.service`.
