@@ -7,6 +7,7 @@ Secret keys are stored in the [fragment identifier](https://tools.ietf.org/html/
 Online at https://hush.maxleon.net/. This host is for demonstration purposes only. Data is subject to being removed.
 
 ### Hosting (Development)
+For a production environment read [./README.production.md](README.production.md)
 
 Requirements:
 * Git
@@ -26,8 +27,6 @@ php artisan key:generate
 php artisan migrate
 php artisan serve
 ```
-
-For a production environment read README.production.md
 
 ### Audit
 This app has only been audited by me. If you are willing and able to audit please contact me at max@maxleon.net

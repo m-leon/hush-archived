@@ -1,7 +1,7 @@
 #!/bin/sh
 cd /app
 
-rm BUILD_COMPLETE
+rm -f BUILD_COMPLETE
 
 yarn install
 yarn production
