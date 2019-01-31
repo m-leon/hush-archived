@@ -7,7 +7,7 @@ Secret keys are stored in the [fragment identifier](https://tools.ietf.org/html/
 Online at https://hush.maxleon.net/. This host is for demonstration purposes only. Data is subject to being removed.
 
 ### Hosting (Development)
-For a production environment read [./README.production.md](README.production.md)
+For a production environment read [README.production.md](README.production.md)
 
 Requirements:
 * Git
