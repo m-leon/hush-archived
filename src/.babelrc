@@ -2,24 +2,30 @@
   "env": {
     "development": {
       "presets": [
-        ["@babel/preset-env", {
-          "modules": false,
-          "targets": {
-            "browsers": "> 2%",
-            "uglify": true
+        [
+          "@babel/preset-env",
+          {
+            "modules": false,
+            "targets": {
+              "browsers": "> 2%",
+              "uglify": true
+            }
           }
-        }]
+        ]
       ]
     },
     "production": {
       "presets": [
-        ["@babel/preset-env", {
-          "modules": false,
-          "targets": {
-            "browsers": "> 2%",
-            "uglify": true
+        [
+          "@babel/preset-env",
+          {
+            "modules": false,
+            "targets": {
+              "browsers": "> 2%",
+              "uglify": true
+            }
           }
-        }]
+        ]
       ]
     }
   }

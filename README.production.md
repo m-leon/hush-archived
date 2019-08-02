@@ -1,6 +1,7 @@
 ### Hosting (Production)
 
 Run the following commands as root
+
 ```
 cd /opt
 git clone https://github.com/m-leon/hush.git
@@ -21,7 +22,9 @@ Depending on your deployment, you may now want to edit docker-compose.yml direct
 You can now run with `docker-compose up`.
 
 ### Systemd
+
 To set up hush with systemd edit the following file to use with your environment and place the file in `/etc/systemd/system/hush.service`.
+
 ```
 [Unit]
 Description=Hush service with docker compose

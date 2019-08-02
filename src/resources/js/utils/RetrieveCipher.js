@@ -5,7 +5,7 @@ export default async (id) => {
     // Make asynchronous request to backend for ciphertext of given ID
     const res = await Axios.get(`/api/post/${id}`);
     // Successfully retrieved ciphertext
-    if (typeof(res.data.status) !== 'undefined' && res.data.status === '0') {
+    if (typeof res.data.status !== 'undefined' && res.data.status === '0') {
       return {
         cipher: res.data.ciphertext,
         error: ''
@@ -18,4 +18,4 @@ export default async (id) => {
       error: 'Failed to retrieve cipher'
     };
   }
-}
+};

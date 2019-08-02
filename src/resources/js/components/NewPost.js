@@ -1,17 +1,17 @@
 import React from 'react';
 
 import NewPostURL from './NewPostURL';
-import SendForm   from '../utils/SendForm';
+import SendForm from '../utils/SendForm';
 
 export default class NewPost extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      error: '',            // Outputs errors to user
-      formDisabled: false,  // Prevents user from double posting, disables the submit button once you initiate the process
-      id: '',               // Holds the returned from the server once the ciphertext is submitted
-      key: ''               // Holds the key from the form
+      error: '', // Outputs errors to user
+      formDisabled: false, // Prevents user from double posting, disables the submit button once you initiate the process
+      id: '', // Holds the returned from the server once the ciphertext is submitted
+      key: '' // Holds the key from the form
     };
   }
 
@@ -19,24 +19,23 @@ export default class NewPost extends React.Component {
     return (
       <div className="newPost">
         <h3 className="newPost__title">Post Your Message</h3>
-        { this.state.error && <p>{this.state.error}</p> }
+        {this.state.error && <p>{this.state.error}</p>}
         <NewPostURL id={this.state.id} encKey={this.state.key} />
-        <form onSubmit={
-          (e) => {
+        <form
+          onSubmit={(e) => {
             this.setState({ formDisabled: true });
             SendForm(e).then((res) => {
               this.setState({ ...res });
             });
-          }
-        }>
+          }}
+        >
           <textarea
             className="newPost__message"
             disabled={this.state.formDisabled}
             name="clear"
             placeholder="Enter your message here"
             rows="10"
-          >
-          </textarea>
+          />
           <span className="newPost__options">
             <input
               className="newPost__key"

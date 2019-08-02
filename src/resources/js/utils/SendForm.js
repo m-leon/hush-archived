@@ -1,13 +1,15 @@
-import Axios  from 'axios';
+import Axios from 'axios';
 import Moment from 'moment';
-import Uuid   from 'uuid/v4';
+import Uuid from 'uuid/v4';
 
 import { encrypt } from './Encryption';
 
 export default async (e) => {
   e.preventDefault();
   // Use key if provided by user, if no key provided generate with UUIDV4
-  const key = (e.target.elements.key.value) ? e.target.elements.key.value : Uuid();
+  const key = e.target.elements.key.value
+    ? e.target.elements.key.value
+    : Uuid();
   // If we generated a key, update the form so the user can see it
   e.target.elements.key.value = key;
 
@@ -23,7 +25,7 @@ export default async (e) => {
     const res = await Axios.post(`/api/post/`, { cipher, expiration });
 
     // Successfully posted
-    if (typeof(res.data.status) !== 'undefined' && res.data.status === '0') {
+    if (typeof res.data.status !== 'undefined' && res.data.status === '0') {
       return {
         error: '',
         id: res.data.id,
@@ -36,17 +38,17 @@ export default async (e) => {
   } catch (e) {
     return { error: e.message, formDisabled: false };
   }
-}
+};
 
 export const calculateExpiration = (formExpiration) => {
   // Default to expire after 1 view
- let expiration = 0;
+  let expiration = 0;
 
- // Calculate the requested expiration time
- if (formExpiration !== '0') {
-   expiration = Moment().add(1, formExpiration);
-   expiration = expiration.unix();
- }
+  // Calculate the requested expiration time
+  if (formExpiration !== '0') {
+    expiration = Moment().add(1, formExpiration);
+    expiration = expiration.unix();
+  }
 
- return expiration;
-}
+  return expiration;
+};

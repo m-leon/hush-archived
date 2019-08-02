@@ -3,8 +3,8 @@ cd /app
 
 rm -f BUILD_COMPLETE
 
-yarn install
-yarn production
+npm install
+npm run production
 
 composer install
 php artisan key:generate -n
