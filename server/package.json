@@ -1,0 +1,27 @@
+{
+  "name": "hush-server",
+  "version": "2.0.0",
+  "author": "Max Leon",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src -d build",
+    "start": "nodemon --exec babel-node src/index.js",
+    "serve": "cross-env NODE_ENV=production node build/index.js",
+    "test": "npm run build && mocha --require @babel/register"
+  },
+  "dependencies": {
+    "cross-env": "^6.0.3",
+    "express": "^4.17.1",
+    "moment": "^2.24.0",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/node": "^7.7.7",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/register": "^7.4.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.19.4"
+  }
+}

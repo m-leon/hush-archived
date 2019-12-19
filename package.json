@@ -1,0 +1,28 @@
+{
+  "name": "hush",
+  "version": "2.0.0",
+  "author": "Max Leon",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m-leon/hush.git"
+  },
+  "bugs": {
+    "url": "https://github.com/m-leon/hush/issues"
+  },
+  "scripts": {
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "setup": "npm install && npm run setup:client && npm run setup:server",
+    "setup:client": "cd client && npm install",
+    "setup:server": "cd server && npm install",
+    "serve": "cd server && npm run serve",
+    "start": "concurrently \"npm run start:client\" \"npm run start:server\"",
+    "start:client": "cd client && npm run start",
+    "start:server": "cd server && npm run start"
+  },
+  "dependencies": {
+    "concurrently": "^5.0.2"
+  }
+}

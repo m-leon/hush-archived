@@ -1,3 +1,5 @@
+**Outdated**
+
 ### Hosting (Production)
 
 Run the following commands as root
