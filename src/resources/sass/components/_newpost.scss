@@ -41,13 +41,14 @@
     }
 
     .newPost__options {
+      align-items: center;
       display: flex;
+      flex-direction: row;
       flex-wrap: wrap;
+      justify-content: space-between;
 
-      .newPost__key,
-      select,
       label {
-        align-self: center;
+        margin: 0 1.5rem;
       }
     }
 
