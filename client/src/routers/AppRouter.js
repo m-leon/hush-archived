@@ -1,6 +1,5 @@
 import React from 'react';
 
-import NotFound from '../components/NotFound';
 import NewPost from '../components/NewPost';
 import ViewPost from '../components/ViewPost';
 
@@ -12,7 +11,6 @@ const AppRouter = () => (
       <Route path="/" component={NewPost} exact={true} />
       <Route path="/new" component={NewPost} />
       <Route path="/view/:id" component={ViewPost} />
-      <Route component={NotFound} />
     </Switch>
   </BrowserRouter>
 );

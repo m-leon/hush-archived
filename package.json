@@ -22,7 +22,7 @@
     "start:client": "cd client && npm run start",
     "start:server": "cd server && npm run start"
   },
-  "dependencies": {
+  "devDependencies": {
     "concurrently": "^5.0.2"
   }
 }

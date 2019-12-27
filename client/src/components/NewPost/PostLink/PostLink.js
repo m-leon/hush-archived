@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NewPostURL = (props) => {
+const PostLink = ({ id, values: { key } }) => {
   let hostname = window.location.hostname;
 
   // Set non-standard ports
@@ -11,11 +11,11 @@ const NewPostURL = (props) => {
     hostname += ':' + window.location.port;
   }
 
-  const postURL = `${hostname}/view/${props.id}/#${props.encKey}`;
+  const postURL = `${hostname}/view/${id}/#${key}`;
 
   return (
     <div>
-      {props.id && props.encKey && (
+      {id && key && (
         <div>
           <p className="newPost__url">This post is available at:</p>
           <p className="newPost__url">
@@ -27,4 +27,4 @@ const NewPostURL = (props) => {
   );
 };
 
-export default NewPostURL;
+export default PostLink;

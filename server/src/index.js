@@ -32,7 +32,7 @@ app.get('/api/post/:postId', (req, res) => {
 
   // No entry found
   if (!entry || !entry.cipher) {
-    return res.json({ status: 1 });
+    return res.json({ success: false });
   }
 
   // Remove expired entries from DB
@@ -72,7 +72,6 @@ app.post('/api/post', (req, res) => {
 
   // Return new ID
   return res.json({
-    status: 0,
     id
   });
 });
