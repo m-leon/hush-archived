@@ -23,7 +23,7 @@ npm run start
 
 - [x] Replace Laravel backend with Express
 - [ ] Replace REST-style API with GraphQL
-- [ ] Improve frontend with Material-UI
+- [x] Improve frontend with Material-UI
 - [ ] Replace crypto-js with node-forge
 
 ### Audit
